@@ -1,52 +1,70 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
-
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ config('app.name', 'Inscription Amazon') }}</title>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="{{ asset('frontend/assets/fontawesome/css/all.min.css') }}" />
+    </head>
+    <body class="bg-gray-300">
+        <div  class="mx-auto my-8 max-w-sm sm:my-20 border-2 p-8 rounded-md shadow-md bg-[#222F3D]">
+            <a href="{{ route('home') }}" class=" flex justify-center">
+                <img class="w-[150px]" src="{{ asset('frontend/assets/images/amazon_logo.png') }}" alt="Logo">
             </a>
+            <h3 class="text-white text-lg py-2">Créer un compte</h3>
+            <form action="{{ route('register') }}" method="POST">
+                @csrf
+                <div class="grid grid-cols-1 gap-x-8 gap-y-4">
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+                    <!-- Name -->
+                    <div>
+                        <label for="name" class="block text-sm/6 font-semibold text-white">Name</label>
+                        <div class="mt-1">
+                            <input type="text" name="name" :value="old('name')" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+                        </div>
+                        @error('name')
+                            <p class="text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-sm/6 font-semibold text-white">Email</label>
+                        <div class="mt-1">
+                            <input type="email" name="email" :value="old('email')" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+                        </div>
+                        @error('email')
+                            <p class="text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block text-sm/6 font-semibold text-white">Password</label>
+                        <div class="mt-1">
+                            <input type="password" name="password" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+                        </div>
+                        @error('password')
+                            <p class="text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div>
+                        <label for="password_confirmation" class="block text-sm/6 font-semibold text-white">Confirm Password</label>
+                        <div class="mt-1">
+                            <input type="password" name="password_confirmation" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+                        </div>
+                        @error('password_confirmation')
+                            <p class="text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button class="bg-primaryColor text-white p-2 rounded-md" type="submit">Continuer</button>
+                    <a href="{{ route('login') }}" class="text-end text-xs text-white">Vous possédez déjà un compte ? Identifiez-vous</a>
+                </div>
+            </form>
         </div>
-    </form>
-</x-guest-layout>
+    </body>
+</html>

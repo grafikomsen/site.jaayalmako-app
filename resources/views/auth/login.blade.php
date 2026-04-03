@@ -1,47 +1,76 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ config('app.name', 'Connexion Amazon') }}</title>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="{{ asset('frontend/assets/fontawesome/css/all.min.css') }}" />
+    </head>
+    <body class="bg-gray-300">
+        <div  class="mx-auto my-12 max-w-sm border-2 p-8 rounded-md shadow-md bg-[#222F3D]">
+            <a href="{{ route('home') }}" class="flex justify-center ">
+                <img class="w-[150px]" src="{{ asset('frontend/assets/images/amazon_logo.png') }}" alt="Logo">
+            </a>
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <div class="grid grid-cols-1 gap-x-8 gap-y-4">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block font-semibold text-white text-sm/6">Email</label>
+                        <div class="mt-1">
+                            <input type="email" name="email" :value="old('email')" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+                        </div>
+                        @error('email')
+                            <p class="text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block font-semibold text-white text-sm/6">Password</label>
+                        <div class="mt-1">
+                            <input type="password" name="password" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+                        </div>
+                        @error('password')
+                            <p class="text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <!-- Remember Me -->
+                        <div class="block mt-2">
+                            <label for="remember_me" class="inline-flex items-center">
+                                <input id="remember_me" type="checkbox" class="text-indigo-600 border-gray-300 rounded shadow-sm focus:ring-indigo-500" name="remember">
+                                <span class="text-xs text-gray-200 ms-2">Remember me</span>
+                            </label>
+                        </div>
+
+                        <div>
+                            @if (Route::has('password.request'))
+                                <a class="text-xs text-gray-200 underline rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                                    Forgot your password?
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                    <button class="p-2 text-white bg-primaryColor rounded-md" type="submit">Se connecter</button>
+                    <h5 class="border-b text-white text-sm text-center py-1">Se connecter avec</h5>
+                    <div class="flex justify-center items-center gap-4">
+                        <a class="text-xs" href="{{ route('social.redirect', 'google') }}" >
+                            <img class="w-6" src="{{ asset('frontend/assets/images/google.svg') }}" alt="">
+                        </a>
+
+                        <a class="text-xs" href="{{ route('social.redirect', 'facebook') }}" >
+                            <img class="w-6" src="{{ asset('frontend/assets/images/facebook.svg') }}" alt="">
+                        </a>
+                    </div>
+                    <a href="{{ route('register') }}" class="text-xs text-white text-end">Nouveau chez Amazon ? créer votre compte Amazon</a>
+                </div>
+            </form>
         </div>
+    </body>
+</html>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
