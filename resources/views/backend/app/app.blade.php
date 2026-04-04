@@ -1,35 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <title>{{ config('app.name', 'eshop') }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/select2/css/select2.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/dropzone/min/dropzone.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('backend/assets/fontawesome/css/all.min.css') }}" />
     </head>
-    <body class="font-poppins h-screen overflow-hidden">
-        <div class="h-screen flex overflow-hidden">
-            <aside class="hidden lg:block w-[230px] h-screen sticky top-0 shrink-0">
-                @include('backend.app.sideBar')
-            </aside>
+    <body class="bg-gray-100 font-sans antialiased">
 
-            <div class="flex-1 min-h-0 flex flex-col overflow-hidden">
-                <header class="sticky top-0 z-20">
-                    @include('backend.app.topBar')
-                </header>
+        <!-- ==================== DASHBOARD LAYOUT ==================== -->
+        <div class="flex h-screen overflow-hidden">
 
-                <main class="flex-1 min-h-0 overflow-y-auto">
-                    @yield('backendContent')
-                </main>
+            <!-- ==================== SIDEBAR (Navigation principale) ==================== -->
+            @include('backend.app.sideBar')
 
-                <footer class="sticky bottom-0 z-10">
-                    @include('backend.app.footer')
-                </footer>
-            </div>
+            <!-- ==================== MAIN CONTENT ==================== -->
+            <main class="flex-1 overflow-y-auto">
+            <!-- Top Header Dashboard -->
+            @include('backend.app.topBar')
+
+            @yield('BackentContent')
+            </main>
         </div>
 
         <!-- jquery js -->
@@ -40,6 +35,8 @@
 
         <!-- Select2 -->
         <script src="{{ asset('backend/assets/select2/js/select2.min.js') }}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
         <script type="text/javascript">
             $.ajaxSetup({
@@ -55,6 +52,40 @@
             });
         </script>
 
+        <script>
+            // Graphique des ventes avec Chart.js
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+                    datasets: [{
+                    label: 'Ventes (€)',
+                    data: [3200, 4100, 3780, 5200, 6800, 5900, 4300],
+                    borderColor: '#2563EB',
+                    backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                    tension: 0.3,
+                    fill: true,
+                    pointBackgroundColor: '#2563EB',
+                    pointBorderColor: '#fff',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} €` } }
+                    },
+                    scales: {
+                    y: { ticks: { callback: (val) => val + '€' }, grid: { color: '#f0f0f0' } }
+                    }
+                }
+            });
+        </script>
         @yield('backendJs')
     </body>
 </html>

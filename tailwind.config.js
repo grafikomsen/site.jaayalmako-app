@@ -22,9 +22,8 @@ export default {
         },
         extend: {
             colors: {
-                primaryColor: '#d14900',
-                primaryColorLight: "#c0c0c0",
-                secondaryColor: '#007185',
+                primaryColor: '#2563EB',
+                secondaryColor: '#F97316',
                 paragraphColor: '#c0c0c0',
                 whiteColor: '#fff',
                 blackColor: "#000",
@@ -37,7 +36,7 @@ export default {
             },
             keyframes: {
                 move: {
-                "50%": {transform: 'translateY(-1rem)'}
+                    "50%": { transform: 'translateY(-1rem)' }
                 }
             },
             animation: {

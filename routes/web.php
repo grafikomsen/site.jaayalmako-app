@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Social\SocialAuthController;
@@ -19,13 +21,16 @@ Route::get('/locale/{locale}', function ($locale) {
     return redirect()->back();
 })->name('locale.switch');
 
+// FRONTEND ROUTES
 Route::get('/', [FrontendController::class, 'index'])->name('home');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/categories', [CategoryController::class, 'categories'])->name('categorie');
+Route::get('/produit', [CategoryController::class, 'product'])->name('produit');
+Route::get('/panier', [CartController::class, 'cart'])->name('panier');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::get('/success', [CartController::class, 'success'])->name('success');
 
 // PROFILE ROUTES
+Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth', IsUser::class])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

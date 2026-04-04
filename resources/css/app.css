@@ -2,3 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+ /* Custom smooth transitions, and subtle hover effects that Tailwind doesn't fully cover */
+.transition-smooth {
+    transition: all 0.2s ease-in-out;
+}
+
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+}
+
+.btn-scale:active {
+    transform: scale(0.96);
+}
+
+/* Custom countdown timer digits style */
+.timer-digit {
+    background: #1e293b;
+    color: white;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    min-width: 2.5rem;
+    text-align: center;
+}
+
+@media (max-width: 640px) {
+    .timer-digit {
+    min-width: 2rem;
+    font-size: 0.8rem;
+    }
+}
+
+PAGSE
+.transition-smooth { transition: all 0.2s ease-in-out; }
+    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
+    .btn-scale:active { transform: scale(0.96); }
+    .timer-digit { background: #1e293b; color: white; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 0.5rem; min-width: 2.5rem; text-align: center; }
+    @media (max-width: 640px) { .timer-digit { min-width: 2rem; font-size: 0.8rem; }
+}
+
+BACKEND
+.transition-smooth { transition: all 0.2s ease-in-out; }
+    .sidebar-link { transition: all 0.2s ease; }
+    .sidebar-link:hover { background-color: #1e3a8a; padding-left: 1.25rem; }
+    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }

@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Http\Controllers\Frontend;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class CategoryController extends Controller
+{
+    public function categories(){
+
+        return view('frontend.category');
+    }
+
+    public function product(){
+
+        return view('frontend.produit');
+    }
+}
